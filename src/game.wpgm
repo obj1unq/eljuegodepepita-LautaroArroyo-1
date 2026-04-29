@@ -1,0 +1,33 @@
+import wollok.game.*
+import pepita.*
+import extras.*
+import comidas.*
+
+
+
+program persecucion{
+  game.addVisual(alpiste)
+  game.addVisual(silvestre)
+  game.addVisual(nido)
+  game.addVisual(pepita)
+  game.addVisual(manzana)
+  game.onTick(3000, "movimientoAlpiste", { alpiste.reposicionar() })
+  game.onTick(5000, "movimientoManzana", { manzana.reposicionar()})
+
+  game.onCollideDo(alpiste, {pepita => pepita.comer(alpiste)} )
+  game.onCollideDo(nido, {pepita => game.stop()})
+  game.onCollideDo(manzana, { pepita => pepita.comer(manzana)manzana.reposicionar() })
+  game.onCollideDo(silvestre, { alguien => alguien.morir() })
+
+  keyboard.up().onPressDo({ pepita.moverArriba() })
+  keyboard.down().onPressDo({ pepita.moverAbajo() })
+  keyboard.right().onPressDo({ pepita.moverDerecha() }) 
+  keyboard.left().onPressDo({ pepita.moverIzquierda() })
+
+  game.boardGround("fondo.jpg")
+  game.width(10)
+  game.height(10)
+  game.title("Persecucion de pepita")
+  game.start()
+}
+
